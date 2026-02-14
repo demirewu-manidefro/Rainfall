@@ -11,9 +11,9 @@ const Navbar = () => {
             initial={{ y: -100 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.5 }}
-            className="w-full bg-slate-900/80 backdrop-blur-md border-b border-white/10 sticky top-0 z-50 px-6 py-4 shadow-lg"
+            className="w-full bg-slate-900/80 backdrop-blur-md border-b border-white/10 sticky top-0 z-50 shadow-lg"
         >
-            <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="w-full px-6 md:px-12 lg:px-24 flex items-center justify-between py-4">
                 <Link to="/" className="flex items-center gap-2 group">
                     <div className="bg-gradient-to-tr from-blue-500 to-cyan-400 p-2 rounded-lg group-hover:scale-110 transition-transform">
                         <CloudRain className="w-6 h-6 text-white" />
@@ -25,7 +25,8 @@ const Navbar = () => {
 
                 <div className="flex items-center gap-6">
                     <NavLink to="/" icon={<Home className="w-4 h-4" />} text="Dashboard" active={location.pathname === '/'} />
-                    <NavLink to="/about" icon={<Info className="w-4 h-4" />} text="About Model" active={location.pathname === '/about'} />
+                    <NavLink to="/about-data" icon={<Info className="w-4 h-4" />} text="About Data" active={location.pathname === '/about-data'} />
+                    <NavLink to="/about-doing" icon={<Info className="w-4 h-4" />} text="About Doing" active={location.pathname === '/about-doing'} />
                     <a
                         href="https://github.com"
                         target="_blank"
