@@ -80,7 +80,29 @@ const Home = () => {
         try {
             const response = await axios.post('http://127.0.0.1:5000/predict', payload);
             if (response.data.success) {
-                setPrediction(response.data.prediction);
+                const newPrediction = response.data.prediction;
+                setPrediction(newPrediction);
+
+                // Add the new prediction to the chart
+                setUserPredictions(prev => [...prev, {
+                    value: parseFloat(newPrediction.toFixed(1)),
+                    timestamp: new Date().toLocaleTimeString(),
+                    date: formData.date
+                }]);
+
+                // --- TIME-SERIES AUTOMATION ---
+                // Advance the date by 1 Dekad (10 days)
+                const nextDate = new Date(dateObj);
+                nextDate.setDate(nextDate.getDate() + 10);
+
+                // Shift lags: New prediction becomes Lag 1, Old Lag 1 becomes Lag 3
+                setFormData(prev => ({
+                    ...prev,
+                    date: nextDate.toISOString().split('T')[0],
+                    rfh_lag3: prev.rfh_lag1,
+                    rfh_lag1: newPrediction.toFixed(2),
+                    rfh_avg: newPrediction.toFixed(2) // Initial guess for next step
+                }));
             } else {
                 setError('Prediction failed');
             }
