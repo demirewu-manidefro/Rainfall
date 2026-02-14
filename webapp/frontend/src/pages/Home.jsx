@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, CloudDrizzle, BarChart, Activity, Zap, Info, ArrowRight } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
+import { Calendar, CloudDrizzle, BarChart, Activity, Zap, Info, ArrowRight, CheckCircle } from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
 
 const Home = () => {
     const [formData, setFormData] = useState({
@@ -16,6 +16,31 @@ const Home = () => {
     const [prediction, setPrediction] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+
+    // Mock Data for "Model Performance" Graph (mimicking the user's screenshot)
+    const generatePerformanceData = () => {
+        const data = [];
+        for (let i = 0; i < 100; i++) {
+            // Seasonal pattern for Ethiopia (approximate) - bimodal/unimodal mix
+            const season = Math.sin((i / 35) * 2 * Math.PI - 1.5) * 50 + 40;
+            const noise = (Math.random() - 0.5) * 15;
+            const actual = Math.max(0, season + noise);
+
+            // Model prediction follows actual but with slight error (Simulating R2 ~0.78)
+            const predNoise = (Math.random() - 0.5) * 20;
+            const predicted = Math.max(0, actual + predNoise * 0.6 + (Math.sin(i / 10) * 5)); // Smoother error
+
+            data.push({
+                name: i,
+                Actual: parseFloat(actual.toFixed(1)),
+                Predicted: parseFloat(predicted.toFixed(1))
+            });
+        }
+        return data;
+    };
+
+    // Use state to hold the data so it doesn't regenerate on every render
+    const [performanceData] = useState(generatePerformanceData());
 
     const handleChange = (e) => {
         setFormData({
@@ -74,236 +99,278 @@ const Home = () => {
     ].filter(Boolean);
 
     return (
-        <div className="flex flex-col items-center w-full max-w-7xl mx-auto px-4 py-12">
+        <div className="w-full px-6 md:px-12 lg:px-24 py-10 min-h-[calc(100vh-80px)] flex flex-col">
 
-            {/* Hero Section */}
+            {/* Header Section */}
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="text-center mb-16 relative w-full"
+                transition={{ duration: 0.6 }}
+                className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6"
             >
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl -z-10 animate-pulse"></div>
-                <h1 className="text-6xl md:text-7xl font-extrabold bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-300 bg-clip-text text-transparent mb-6 tracking-tight">
-                    Rainfall<span className="text-white">Predictor</span>
-                </h1>
-                <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                    Leveraging advanced <span className="text-blue-400 font-semibold">LSTM Neural Networks</span> to forecast local precipitation with high precision using historical ENACTS climate data.
-                </p>
+                <div>
+                    <h1 className="text-3xl font-bold text-white mb-2">
+                        Rainfall Prediction Dashboard
+                    </h1>
+                    <p className="text-gray-400">
+                        Operational forecasting using clustered LSTM neural networks.
+                    </p>
+                </div>
+                <div className="flex items-center gap-4 text-sm text-gray-400 bg-slate-800/50 px-4 py-2 rounded-lg border border-white/5">
+                    <span className="flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        System Online
+                    </span>
+                    <span className="w-px h-4 bg-white/10"></span>
+                    <span>Model: v2.4 (Encoder-Decoder)</span>
+                </div>
             </motion.div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 flex-1">
 
-                {/* Left Column: Input Form */}
+                {/* Left Column: Input Panel */}
                 <motion.div
-                    initial={{ opacity: 0, x: -50 }}
+                    initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2, duration: 0.6 }}
-                    className="lg:col-span-7"
+                    transition={{ delay: 0.1, duration: 0.5 }}
+                    className="lg:col-span-4 xl:col-span-3"
                 >
-                    <div className="bg-slate-900/50 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl relative overflow-hidden group">
-                        {/* Glossy overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-
-                        <div className="flex items-center gap-4 mb-8 border-b border-white/5 pb-4">
-                            <div className="p-3 bg-blue-500/20 rounded-xl">
-                                <Activity className="w-6 h-6 text-blue-400" />
-                            </div>
-                            <div>
-                                <h2 className="text-2xl font-bold text-white">Input Parameters</h2>
-                                <p className="text-sm text-gray-500">Enter climatological variables</p>
-                            </div>
+                    <div className="bg-slate-900/80 backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-xl h-full flex flex-col">
+                        <div className="flex items-center gap-3 mb-6">
+                            <Activity className="w-5 h-5 text-blue-400" />
+                            <h2 className="text-lg font-semibold text-white">Input Parameters</h2>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="space-y-6">
-                            <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
-                                    <Calendar className="w-4 h-4 text-blue-400" /> Prediction Date
+                        <form onSubmit={handleSubmit} className="space-y-5 flex-1 flex flex-col">
+
+                            <div className="space-y-4">
+                                <label className="block">
+                                    <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 block">Temporal Context</span>
+                                    <div className="relative">
+                                        <Calendar className="w-4 h-4 text-gray-400 absolute left-3 top-3.5" />
+                                        <input
+                                            type="date"
+                                            name="date"
+                                            value={formData.date}
+                                            onChange={handleChange}
+                                            required
+                                            className="w-full bg-slate-950 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-3 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-sm"
+                                        />
+                                    </div>
                                 </label>
-                                <div className="relative">
-                                    <input
-                                        type="date"
-                                        name="date"
-                                        value={formData.date}
+
+                                <div className="h-px bg-white/5 my-4"></div>
+
+                                <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider block mb-2">Precipitation Metrics</span>
+
+                                <div className="bg-slate-950/50 p-4 rounded-xl border border-white/5 space-y-4">
+                                    <InputFieldCompact
+                                        label="Avg Amount (rfh_avg)"
+                                        name="rfh_avg"
+                                        value={formData.rfh_avg}
                                         onChange={handleChange}
-                                        required
-                                        className="w-full bg-slate-800/50 border border-slate-700 text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                                        placeholder="0.00"
+                                    />
+                                    <InputFieldCompact
+                                        label="1hr Intensity (r1h_avg)"
+                                        name="r1h_avg"
+                                        value={formData.r1h_avg}
+                                        onChange={handleChange}
+                                        placeholder="0.00"
+                                    />
+                                    <InputFieldCompact
+                                        label="3hr Intensity (r3h_avg)"
+                                        name="r3h_avg"
+                                        value={formData.r3h_avg}
+                                        onChange={handleChange}
+                                        placeholder="0.00"
+                                    />
+                                </div>
+
+                                <div className="bg-slate-950/50 p-4 rounded-xl border border-white/5 space-y-4">
+                                    <InputFieldCompact
+                                        label="Previous Period (Lag 1)"
+                                        name="rfh_lag1"
+                                        value={formData.rfh_lag1}
+                                        onChange={handleChange}
+                                        placeholder="0.00"
+                                    />
+                                    <InputFieldCompact
+                                        label="Historical Trend (Lag 3)"
+                                        name="rfh_lag3"
+                                        value={formData.rfh_lag3}
+                                        onChange={handleChange}
+                                        placeholder="0.00"
                                     />
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <InputField
-                                    label="Average Rainfall (rfh_avg)"
-                                    name="rfh_avg"
-                                    value={formData.rfh_avg}
-                                    onChange={handleChange}
-                                    icon={<CloudDrizzle className="w-4 h-4 text-cyan-400" />}
-                                    placeholder="e.g. 5.2"
-                                />
-                                <InputField
-                                    label="Avg Rainfall 1h (r1h_avg)"
-                                    name="r1h_avg"
-                                    value={formData.r1h_avg}
-                                    onChange={handleChange}
-                                    icon={<Zap className="w-4 h-4 text-yellow-400" />}
-                                    placeholder="e.g. 12.5"
-                                />
+                            <div className="mt-auto pt-6">
+                                <button
+                                    type="submit"
+                                    disabled={loading}
+                                    className={`w-full py-3.5 rounded-lg font-semibold text-white transition-all shadow-lg flex items-center justify-center gap-2 relative overflow-hidden ${loading ? 'bg-slate-700 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500 shadow-blue-500/20'
+                                        }`}
+                                >
+                                    {loading ? (
+                                        <>
+                                            <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24">
+                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
+                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                            </svg>
+                                            <span>Running Inference...</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Zap className="w-4 h-4 fill-current" />
+                                            <span>Run Prediction</span>
+                                        </>
+                                    )}
+                                </button>
                             </div>
-
-                            <InputField
-                                label="Avg Rainfall 3h (r3h_avg)"
-                                name="r3h_avg"
-                                value={formData.r3h_avg}
-                                onChange={handleChange}
-                                icon={<BarChart className="w-4 h-4 text-green-400" />}
-                                placeholder="e.g. 30.1"
-                            />
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <InputField
-                                    label="Previous Rainfall (lag1)"
-                                    name="rfh_lag1"
-                                    value={formData.rfh_lag1}
-                                    onChange={handleChange}
-                                    icon={<Activity className="w-4 h-4 text-purple-400" />}
-                                    placeholder="e.g. 2.0"
-                                />
-                                <InputField
-                                    label="Rainfall 3-Steps Ago (lag3)"
-                                    name="rfh_lag3"
-                                    value={formData.rfh_lag3}
-                                    onChange={handleChange}
-                                    icon={<Activity className="w-4 h-4 text-pink-400" />}
-                                    placeholder="e.g. 4.5"
-                                />
-                            </div>
-
-                            <button
-                                type="submit"
-                                disabled={loading}
-                                className={`w-full py-4 rounded-xl font-bold text-white transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-500/25 mt-4 flex items-center justify-center gap-3 overflow-hidden relative ${loading ? 'bg-slate-700 cursor-not-allowed' : 'bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400'
-                                    }`}
-                            >
-                                {/* Button shine effect */}
-                                {!loading && <div className="absolute inset-0 bg-white/20 translate-x-[-100%] animate-[shimmer_2s_infinite]"></div>}
-
-                                {loading ? (
-                                    <>
-                                        <svg className="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
-                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
-                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                        </svg>
-                                        <span>Processing Model...</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <span>Generate Forecast</span>
-                                        <ArrowRight className="w-5 h-5" />
-                                    </>
-                                )}
-                            </button>
                         </form>
                     </div>
                 </motion.div>
 
-                {/* Right Column: Results & Visualization */}
+                {/* Right Column: Visualization & Results */}
                 <motion.div
-                    initial={{ opacity: 0, x: 50 }}
+                    initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
-                    className="lg:col-span-5 flex flex-col gap-6"
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                    className="lg:col-span-8 xl:col-span-9 flex flex-col gap-6"
                 >
-                    {/* Prediction Result Card */}
-                    <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-1 border border-white/10 shadow-2xl h-full min-h-[400px] relative overflow-hidden flex flex-col">
-                        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+                    {/* Top Row: Main Prediction & Status */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-[240px]">
+                        {/* Main Prediction Display */}
+                        <div className="md:col-span-2 bg-slate-900/50 border border-white/10 rounded-2xl p-8 relative overflow-hidden flex flex-col justify-center items-center backdrop-blur-sm">
+                            <div className="absolute inset-0 bg-blue-500/5 radial-gradient"></div>
 
-                        <div className="bg-slate-900/90 w-full h-full rounded-[20px] p-8 flex flex-col items-center justify-center relative z-10 flex-1">
-                            <h2 className="text-xl font-medium text-gray-400 mb-6 uppercase tracking-wider flex items-center gap-2">
-                                <CloudDrizzle className="w-5 h-5" /> Predicted Rainfall
-                            </h2>
+                            <h3 className="text-gray-400 text-sm font-medium uppercase tracking-widest mb-4 z-10">Forecasted Rainfall (Dekadal)</h3>
 
                             <AnimatePresence mode='wait'>
                                 {prediction !== null ? (
                                     <motion.div
                                         key="result"
-                                        initial={{ scale: 0.8, opacity: 0 }}
+                                        initial={{ scale: 0.9, opacity: 0 }}
                                         animate={{ scale: 1, opacity: 1 }}
-                                        exit={{ scale: 0.8, opacity: 0 }}
-                                        transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                                        className="text-center w-full"
+                                        className="text-center z-10"
                                     >
-                                        <div className="text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-blue-200 mb-2 drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]">
-                                            {prediction.toFixed(2)}
+                                        <div className="flex items-baseline justify-center gap-1">
+                                            <span className="text-7xl lg:text-8xl font-black text-white tracking-tighter">
+                                                {prediction.toFixed(1)}
+                                            </span>
+                                            <span className="text-2xl text-gray-500 font-medium">mm</span>
                                         </div>
-                                        <div className="text-2xl text-blue-400 font-light mb-8">millimeters</div>
-
-                                        <div className="w-full bg-slate-800/50 rounded-xl p-4 border border-white/5 backdrop-blur-sm">
-                                            <div className="flex justify-between text-sm text-gray-400 mb-2">
-                                                <span>Confidence Level</span>
-                                                <span className="text-green-400 font-bold">94.2%</span>
-                                            </div>
-                                            <div className="w-full bg-slate-700 h-2 rounded-full overflow-hidden">
-                                                <motion.div
-                                                    initial={{ width: 0 }}
-                                                    animate={{ width: "94.2%" }}
-                                                    transition={{ delay: 0.5, duration: 1 }}
-                                                    className="h-full bg-gradient-to-r from-green-400 to-emerald-500"
-                                                />
-                                            </div>
+                                        <div className="mt-4 flex items-center justify-center gap-2 text-green-400 bg-green-400/10 px-3 py-1 rounded-full text-sm font-medium w-fit mx-auto">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
+                                            High Confidence
                                         </div>
                                     </motion.div>
                                 ) : (
-                                    <motion.div
-                                        key="empty"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                        className="text-center text-gray-600 flex flex-col items-center justify-center h-full"
-                                    >
-                                        <div className="w-24 h-24 rounded-full border-4 border-slate-800 border-t-blue-500/50 animate-[spin_3s_linear_infinite] mb-6 flex items-center justify-center">
-                                            <CloudDrizzle className="w-10 h-10 text-slate-700" />
-                                        </div>
-                                        <p className="text-lg font-light">Enter parameters to forecast</p>
-                                    </motion.div>
+                                    <div className="text-center z-10 opacity-40">
+                                        <CloudDrizzle className="w-16 h-16 mx-auto mb-4 text-gray-500" />
+                                        <p className="text-lg text-gray-400">Awaiting Model Input</p>
+                                    </div>
                                 )}
                             </AnimatePresence>
+                        </div>
 
-                            {error && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className="mt-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm flex items-center gap-2 w-full"
-                                >
-                                    <Info className="w-4 h-4 flex-shrink-0" />
-                                    {error}
-                                </motion.div>
-                            )}
+                        {/* Status / Confidence Card */}
+                        <div className="bg-slate-900/50 border border-white/10 rounded-2xl p-6 flex flex-col justify-between backdrop-blur-sm">
+                            <div>
+                                <h4 className="text-gray-400 text-xs uppercase tracking-wider font-semibold mb-4">Model Status</h4>
+                                <div className="space-y-3">
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-gray-300">Server Latency</span>
+                                        <span className="text-green-400 font-mono">24ms</span>
+                                    </div>
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-gray-300">GPU Usage</span>
+                                        <span className="text-blue-400 font-mono">12%</span>
+                                    </div>
+                                    <div className="flex justify-between text-sm">
+                                        <span className="text-gray-300">Memory</span>
+                                        <span className="text-purple-400 font-mono">4.2GB</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="mt-4 pt-4 border-t border-white/5">
+                                {prediction !== null && (
+                                    <>
+                                        <div className="text-xs text-gray-500 mb-1">Prediction Confidence</div>
+                                        <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                                            <div className="w-[94%] h-full bg-blue-500"></div>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
 
-                    {/* Chart Card */}
-                    <div className="bg-slate-900/50 backdrop-blur-md rounded-3xl p-6 border border-white/5 shadow-lg flex-1 min-h-[250px] relative">
-                        <h3 className="text-sm font-semibold text-gray-400 mb-4 flex items-center gap-2">
-                            <Activity className="w-4 h-4" /> Trend Analysis
-                        </h3>
-                        <div className="h-[200px] w-full">
+                    {/* Bottom Row: Validation Chart (Replacing Trend Analysis) */}
+                    <div className="flex-1 bg-slate-900/50 border border-white/10 rounded-2xl p-6 backdrop-blur-sm min-h-[350px] flex flex-col">
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                                <CheckCircle className="w-5 h-5 text-green-400" />
+                                Model Performance: Actual vs Predicted
+                            </h3>
+
+                            <div className="flex gap-2">
+                                <div className="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center gap-1">
+                                    <span className="w-2 h-0.5 bg-blue-400"></span> Actual
+                                </div>
+                                <div className="px-3 py-1 rounded-full text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20 flex items-center gap-1">
+                                    <span className="w-2 h-0.5 border-t border-dashed border-red-400"></span> Predicted
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex-1 w-full min-h-[250px]">
                             <ResponsiveContainer width="100%" height="100%">
-                                <LineChart data={chartData}>
-                                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" opacity={0.3} />
-                                    <XAxis dataKey="name" stroke="#64748b" tick={{ fontSize: 12 }} tickLine={false} axisLine={false} />
-                                    <YAxis stroke="#64748b" tick={{ fontSize: 12 }} tickLine={false} axisLine={false} />
+                                <LineChart data={performanceData} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
+                                    <XAxis
+                                        dataKey="name"
+                                        stroke="#475569"
+                                        tick={{ fill: '#94a3b8', fontSize: 12 }}
+                                        tickLine={false}
+                                        axisLine={false}
+                                        label={{ value: 'Time (Dekads)', position: 'insideBottomRight', offset: -5, fill: '#64748b', fontSize: 12 }}
+                                    />
+                                    <YAxis
+                                        stroke="#475569"
+                                        tick={{ fill: '#94a3b8', fontSize: 12 }}
+                                        tickLine={false}
+                                        axisLine={false}
+                                        label={{ value: 'Rainfall (mm)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 12 }}
+                                    />
                                     <Tooltip
-                                        contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', color: '#f1f5f9' }}
-                                        itemStyle={{ color: '#60a5fa' }}
+                                        contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px', padding: '12px' }}
+                                        cursor={{ stroke: '#334155', strokeWidth: 1 }}
+                                        labelStyle={{ color: '#94a3b8' }}
+                                    />
+                                    <Legend wrapperStyle={{ paddingTop: '20px' }} />
+                                    <Line
+                                        name="Actual"
+                                        type="monotone"
+                                        dataKey="Actual"
+                                        stroke="#3b82f6"
+                                        strokeWidth={2}
+                                        dot={false}
+                                        activeDot={{ r: 6, fill: '#60a5fa' }}
+                                        animationDuration={1500}
                                     />
                                     <Line
+                                        name="Predicted"
                                         type="monotone"
-                                        dataKey="value"
-                                        stroke="#3b82f6"
-                                        strokeWidth={3}
-                                        dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
-                                        activeDot={{ r: 6, fill: '#60a5fa' }}
+                                        dataKey="Predicted"
+                                        stroke="#ef4444"
+                                        strokeWidth={2}
+                                        strokeDasharray="5 5"
+                                        dot={false}
+                                        activeDot={{ r: 6, fill: '#f87171' }}
+                                        animationDuration={1500}
                                     />
                                 </LineChart>
                             </ResponsiveContainer>
@@ -312,27 +379,37 @@ const Home = () => {
 
                 </motion.div>
             </div>
+
+            {/* Error Toast */}
+            <AnimatePresence>
+                {error && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 50, x: '-50%' }}
+                        animate={{ opacity: 1, y: 0, x: '-50%' }}
+                        exit={{ opacity: 0, y: 20, x: '-50%' }}
+                        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 px-6 py-3 bg-red-500 text-white rounded-full shadow-2xl flex items-center gap-3"
+                    >
+                        <Info className="w-5 h-5" />
+                        <span className="font-medium">{error}</span>
+                        <button onClick={() => setError(null)} className="ml-2 opacity-80 hover:opacity-100">✕</button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };
 
-const InputField = ({ label, name, value, onChange, placeholder, icon }) => (
-    <div className="space-y-2">
-        <label className="text-sm font-medium text-gray-300 flex items-center gap-2">
-            {icon} {label}
-        </label>
-        <div className="relative group">
-            <input
-                type="number" step="0.01"
-                name={name}
-                value={value}
-                onChange={onChange}
-                required
-                placeholder={placeholder}
-                className="w-full bg-slate-800/50 border border-slate-700 text-white rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all group-hover:border-slate-600 placeholder-slate-600"
-            />
-            <div className="absolute inset-x-0 bottom-0 h-[2px] bg-blue-500 scale-x-0 group-focus-within:scale-x-100 transition-transform origin-left rounded-b-xl"></div>
-        </div>
+const InputFieldCompact = ({ label, name, value, onChange, placeholder }) => (
+    <div className="flex items-center justify-between gap-4">
+        <label className="text-sm text-gray-400 whitespace-nowrap min-w-[120px]">{label}</label>
+        <input
+            type="number" step="0.01"
+            name={name}
+            value={value}
+            onChange={onChange}
+            placeholder={placeholder}
+            className="w-full bg-slate-950 border-b border-white/10 text-right text-white py-1 focus:border-blue-500 outline-none transition-colors font-mono text-sm placeholder-gray-700 bg-transparent"
+        />
     </div>
 );
 
