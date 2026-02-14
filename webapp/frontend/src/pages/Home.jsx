@@ -317,19 +317,42 @@ const Home = () => {
                                 Model Performance: Actual vs Predicted
                             </h3>
 
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 items-center">
                                 <div className="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center gap-1">
                                     <span className="w-2 h-0.5 bg-blue-400"></span> Actual
                                 </div>
                                 <div className="px-3 py-1 rounded-full text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20 flex items-center gap-1">
                                     <span className="w-2 h-0.5 border-t border-dashed border-red-400"></span> Predicted
                                 </div>
+                                {userPredictions.length > 0 && (
+                                    <>
+                                        <div className="px-3 py-1 rounded-full text-xs font-medium bg-green-500/10 text-green-400 border border-green-500/20 flex items-center gap-1">
+                                            <span className="w-2 h-2 rounded-full bg-green-400"></span> Your Predictions ({userPredictions.length})
+                                        </div>
+                                        <button
+                                            onClick={() => setUserPredictions([])}
+                                            className="px-3 py-1 rounded-full text-xs font-medium bg-gray-500/10 text-gray-400 border border-gray-500/20 hover:bg-gray-500/20 transition-colors"
+                                            title="Clear your predictions"
+                                        >
+                                            Clear
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         </div>
 
                         <div className="flex-1 w-full min-h-[250px]">
                             <ResponsiveContainer width="100%" height="100%">
-                                <LineChart data={performanceData} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
+                                <ComposedChart
+                                    data={[
+                                        ...performanceData,
+                                        ...userPredictions.map((pred, idx) => ({
+                                            name: performanceData.length + idx,
+                                            UserPrediction: pred.value
+                                        }))
+                                    ]}
+                                    margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
+                                >
                                     <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" vertical={false} />
                                     <XAxis
                                         dataKey="name"
@@ -337,6 +360,7 @@ const Home = () => {
                                         tick={{ fill: '#94a3b8', fontSize: 12 }}
                                         tickLine={false}
                                         axisLine={false}
+                                        padding={{ right: 40 }}
                                         label={{ value: 'Time (Dekads)', position: 'insideBottomRight', offset: -5, fill: '#64748b', fontSize: 12 }}
                                     />
                                     <YAxis
@@ -350,8 +374,15 @@ const Home = () => {
                                         contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px', padding: '12px' }}
                                         cursor={{ stroke: '#334155', strokeWidth: 1 }}
                                         labelStyle={{ color: '#94a3b8' }}
+                                        formatter={(value, name) => {
+                                            if (value === null || value === undefined) return null;
+                                            const label = name === 'UserPrediction' ? 'Your Prediction' : name;
+                                            return [value + ' mm', label];
+                                        }}
                                     />
                                     <Legend wrapperStyle={{ paddingTop: '20px' }} />
+
+                                    {/* 1. Historical Actual Line (Blue Solid) */}
                                     <Line
                                         name="Actual"
                                         type="monotone"
@@ -362,6 +393,8 @@ const Home = () => {
                                         activeDot={{ r: 6, fill: '#60a5fa' }}
                                         animationDuration={1500}
                                     />
+
+                                    {/* 2. Historical Predicted Line (Red Dashed) */}
                                     <Line
                                         name="Predicted"
                                         type="monotone"
@@ -373,7 +406,20 @@ const Home = () => {
                                         activeDot={{ r: 6, fill: '#f87171' }}
                                         animationDuration={1500}
                                     />
-                                </LineChart>
+
+                                    {/* 3. Your Live Predictions (Green Connected Line) */}
+                                    <Line
+                                        name="Your Predictions"
+                                        type="monotone"
+                                        dataKey="UserPrediction"
+                                        stroke="#10b981"
+                                        strokeWidth={3}
+                                        connectNulls={true}
+                                        dot={{ r: 5, fill: '#10b981', strokeWidth: 2, stroke: '#fff' }}
+                                        activeDot={{ r: 8, fill: '#34d399' }}
+                                        animationDuration={1500}
+                                    />
+                                </ComposedChart>
                             </ResponsiveContainer>
                         </div>
                     </div>
