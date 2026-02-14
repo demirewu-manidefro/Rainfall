@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, CloudDrizzle, BarChart, Activity, Zap, Info, ArrowRight, CheckCircle } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend, ScatterChart, Scatter, ComposedChart, ZAxis } from 'recharts';
 
 const Home = () => {
     const [formData, setFormData] = useState({
@@ -16,6 +16,7 @@ const Home = () => {
     const [prediction, setPrediction] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [userPredictions, setUserPredictions] = useState([]); // Store user predictions
 
     // Mock Data for "Model Performance" Graph (mimicking the user's screenshot)
     const generatePerformanceData = () => {
