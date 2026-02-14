@@ -4,7 +4,7 @@ import { Heart, Globe, Linkedin, Twitter } from 'lucide-react';
 const Footer = () => {
     return (
         <footer className="w-full bg-slate-900 border-t border-white/10 mt-auto py-8 text-center text-gray-500 font-light">
-            <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div className="w-full max-w-[1920px] mx-auto px-6 md:px-12 lg:px-24 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                 <div className="flex flex-col items-center md:items-start text-left">
                     <h3 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent mb-4">
                         Rainfall AI
