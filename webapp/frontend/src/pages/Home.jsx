@@ -122,7 +122,7 @@ const Home = () => {
     ].filter(Boolean);
 
     return (
-        <div className="w-full px-6 md:px-12 lg:px-24 py-10 min-h-[calc(100vh-80px)] flex flex-col">
+        <div className="w-full px-4 sm:px-6 md:px-12 lg:px-24 py-6 md:py-10 min-h-[calc(100vh-80px)] flex flex-col">
 
             {/* Header Section */}
             <motion.div
@@ -132,20 +132,20 @@ const Home = () => {
                 className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6"
             >
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
                         Rainfall Prediction Dashboard
                     </h1>
-                    <p className="text-gray-400">
+                    <p className="text-gray-400 text-sm sm:text-base">
                         Operational forecasting using clustered LSTM neural networks.
                     </p>
                 </div>
-                <div className="flex items-center gap-4 text-sm text-gray-400 bg-slate-800/50 px-4 py-2 rounded-lg border border-white/5">
-                    <span className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                        System Online
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-[10px] sm:text-sm text-gray-400 bg-slate-800/50 px-3 sm:px-4 py-2 rounded-lg border border-white/5 w-fit">
+                    <span className="flex items-center gap-1.5 sm:gap-2">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        <span className="whitespace-nowrap">System Online</span>
                     </span>
-                    <span className="w-px h-4 bg-white/10"></span>
-                    <span>Model: v2.4 (Encoder-Decoder)</span>
+                    <span className="w-px h-3 sm:h-4 bg-white/10 hidden min-[380px]:block"></span>
+                    <span className="whitespace-nowrap">Model: v2.4 (Enc-Dec)</span>
                 </div>
             </motion.div>
 
@@ -263,7 +263,7 @@ const Home = () => {
                     className="lg:col-span-8 xl:col-span-9 flex flex-col gap-6"
                 >
                     {/* Top Row: Main Prediction & Status */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-[240px]">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 min-h-fit md:h-[240px]">
                         {/* Main Prediction Display */}
                         <div className="md:col-span-2 bg-slate-900/50 border border-white/10 rounded-2xl p-8 relative overflow-hidden flex flex-col justify-center items-center backdrop-blur-sm">
                             <div className="absolute inset-0 bg-blue-500/5 radial-gradient"></div>
@@ -279,10 +279,10 @@ const Home = () => {
                                         className="text-center z-10"
                                     >
                                         <div className="flex items-baseline justify-center gap-1">
-                                            <span className="text-7xl lg:text-8xl font-black text-white tracking-tighter">
+                                            <span className="text-5xl sm:text-7xl lg:text-8xl font-black text-white tracking-tighter">
                                                 {prediction.toFixed(1)}
                                             </span>
-                                            <span className="text-2xl text-gray-500 font-medium">mm</span>
+                                            <span className="text-xl sm:text-2xl text-gray-500 font-medium">mm</span>
                                         </div>
                                         <div className="mt-4 flex items-center justify-center gap-2 text-green-400 bg-green-400/10 px-3 py-1 rounded-full text-sm font-medium w-fit mx-auto">
                                             <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
@@ -332,28 +332,28 @@ const Home = () => {
                     </div>
 
                     {/* Bottom Row: Validation Chart (Replacing Trend Analysis) */}
-                    <div className="flex-1 bg-slate-900/50 border border-white/10 rounded-2xl p-6 backdrop-blur-sm min-h-[350px] flex flex-col">
-                        <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                                <CheckCircle className="w-5 h-5 text-green-400" />
-                                Model Performance: Actual vs Predicted
+                    <div className="flex-1 bg-slate-900/50 border border-white/10 rounded-2xl p-4 sm:p-6 backdrop-blur-sm min-h-[300px] sm:min-h-[350px] flex flex-col">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+                            <h3 className="text-base sm:text-lg font-semibold text-white flex items-center gap-2">
+                                <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
+                                Model Performance
                             </h3>
 
-                            <div className="flex gap-2 items-center">
-                                <div className="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center gap-1">
+                            <div className="flex flex-wrap gap-2 items-center">
+                                <div className="px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center gap-1">
                                     <span className="w-2 h-0.5 bg-blue-400"></span> Actual
                                 </div>
-                                <div className="px-3 py-1 rounded-full text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20 flex items-center gap-1">
+                                <div className="px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20 flex items-center gap-1">
                                     <span className="w-2 h-0.5 border-t border-dashed border-red-400"></span> Predicted
                                 </div>
                                 {userPredictions.length > 0 && (
                                     <>
-                                        <div className="px-3 py-1 rounded-full text-xs font-medium bg-green-500/10 text-green-400 border border-green-500/20 flex items-center gap-1">
-                                            <span className="w-2 h-2 rounded-full bg-green-400"></span> Your Predictions ({userPredictions.length})
+                                        <div className="px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-medium bg-green-500/10 text-green-400 border border-green-500/20 flex items-center gap-1">
+                                            <span className="w-2 h-2 rounded-full bg-green-400"></span> Yours ({userPredictions.length})
                                         </div>
                                         <button
                                             onClick={() => setUserPredictions([])}
-                                            className="px-3 py-1 rounded-full text-xs font-medium bg-gray-500/10 text-gray-400 border border-gray-500/20 hover:bg-gray-500/20 transition-colors"
+                                            className="px-2 sm:px-3 py-1 rounded-full text-[10px] sm:text-xs font-medium bg-gray-500/10 text-gray-400 border border-gray-500/20 hover:bg-gray-500/20 transition-colors"
                                             title="Clear your predictions"
                                         >
                                             Clear
@@ -379,21 +379,21 @@ const Home = () => {
                                     <XAxis
                                         dataKey="name"
                                         stroke="#475569"
-                                        tick={{ fill: '#94a3b8', fontSize: 12 }}
+                                        tick={{ fill: '#94a3b8', fontSize: 10 }}
                                         tickLine={false}
                                         axisLine={false}
-                                        padding={{ right: 40 }}
-                                        label={{ value: 'Time (Dekads)', position: 'insideBottomRight', offset: -5, fill: '#64748b', fontSize: 12 }}
+                                        padding={{ right: 20 }}
+                                        label={{ value: 'Time', position: 'insideBottomRight', offset: -5, fill: '#64748b', fontSize: 10 }}
                                     />
                                     <YAxis
                                         stroke="#475569"
-                                        tick={{ fill: '#94a3b8', fontSize: 12 }}
+                                        tick={{ fill: '#94a3b8', fontSize: 10 }}
                                         tickLine={false}
                                         axisLine={false}
-                                        label={{ value: 'Rainfall (mm)', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 12 }}
+                                        label={{ value: 'Rainfall', angle: -90, position: 'insideLeft', fill: '#64748b', fontSize: 10 }}
                                     />
                                     <Tooltip
-                                        contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px', padding: '12px' }}
+                                        contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '8px', padding: '8px', fontSize: '11px' }}
                                         cursor={{ stroke: '#334155', strokeWidth: 1 }}
                                         labelStyle={{ color: '#94a3b8' }}
                                         formatter={(value, name) => {
@@ -402,7 +402,7 @@ const Home = () => {
                                             return [value + ' mm', label];
                                         }}
                                     />
-                                    <Legend wrapperStyle={{ paddingTop: '20px' }} />
+                                    <Legend wrapperStyle={{ paddingTop: '10px', fontSize: '10px' }} />
 
                                     {/* 1. Historical Actual Line (Blue Solid) */}
                                     <Line
@@ -469,15 +469,15 @@ const Home = () => {
 };
 
 const InputFieldCompact = ({ label, name, value, onChange, placeholder }) => (
-    <div className="flex items-center justify-between gap-4">
-        <label className="text-sm text-gray-400 whitespace-nowrap min-w-[120px]">{label}</label>
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4">
+        <label className="text-[10px] sm:text-sm text-gray-400 uppercase sm:normal-case font-semibold sm:font-normal whitespace-nowrap min-w-fit">{label}</label>
         <input
             type="number" step="0.01"
             name={name}
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            className="w-full bg-slate-950 border-b border-white/10 text-right text-white py-1 focus:border-blue-500 outline-none transition-colors font-mono text-sm placeholder-gray-700 bg-transparent"
+            className="w-full bg-slate-950 border-b border-white/10 sm:text-right text-white py-1 focus:border-blue-500 outline-none transition-colors font-mono text-sm placeholder-gray-700 bg-transparent"
         />
     </div>
 );
