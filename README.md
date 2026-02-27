@@ -223,8 +223,8 @@ To support:
 
 # 👤 Author
 
-**Manidefro Tmariam**  
-Computer Science | Data Science  
+**Demirewu Manidefro**  
+Data Science  | Full stack web developer
 Cloud & AI Systems  
 
 📌 Focus: AI for Climate Intelligence  
