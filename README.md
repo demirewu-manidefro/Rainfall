@@ -54,6 +54,21 @@ The "RainfallAI" web application provides a professional-grade interface for agr
 ---
 
 ## 📂 Project Structure
+## 🚀 Getting Started
+
+### 1. Prerequisites
+* **Python 3.9+**
+* **Node.js 18+**
+
+### 2. Backend Setup
+```bash
+cd webapp/backend
+python -m venv venv
+# Activate on Windows: venv\Scripts\activate
+# Activate on Mac/Linux: source venv/bin/activate
+source venv/bin/activate  
+pip install -r requirements.txt
+python app.py
 
 🤝 Contributing
 Contributions are welcome! If you'd like to improve the feature engineering or UI components, please fork the repo and submit a pull request.
