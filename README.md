@@ -4,53 +4,234 @@
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![Flask](https://img.shields.io/badge/Flask-3.0-000000?style=for-the-badge&logo=flask&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.0-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
-An end-to-end AI solution for predicting **Dekadal (10-day) rainfall** in Ethiopia. This project combines a high-accuracy **LSTM Neural Network** with a modern **React-based dashboard** for real-time climate monitoring and recursive forecasting.
-
----
-
-## 📺 Dashboard Overview
-![Dashboard UI](https://github.com/user-attachments/assets/your-screenshot-link-here) 
-*The RainfallAI Dashboard featuring real-time input sliders, Ethiopian calendar integration, and historical vs. predicted trend analysis.*
+An end-to-end AI system for **Dekadal (10-day) rainfall forecasting in Ethiopia**.  
+RainfallAI combines a high-precision LSTM deep learning model (**R² = 0.98**) with a modern full-stack dashboard for real-time climate intelligence and recursive forecasting.
 
 ---
 
-## 🧠 Core Intelligence (Machine Learning)
+## 📺 Dashboard Preview
 
-The forecasting engine is built on a custom Deep Learning architecture optimized for the unique climatic patterns of the Ethiopian Highlands.
+![Dashboard Preview](https://your-image-link-here.com)
 
-### 1. Advanced Feature Engineering
-To achieve an **R² of 0.98**, the raw subnational data underwent rigorous transformation:
-*   **Cyclical Time Encoding:** Months and Dekads were mapped to `sin` and `cos` coordinates, allowing the model to understand that December (Month 12) is chronologically adjacent to January (Month 1).
-*   **Logarithmic Squashing:** Applied `np.log1p` to handle extreme rainfall outliers while maintaining a normal distribution for training stability.
-*   **Temporal Memory:** Engineered **Lag Features** (`rfh_lag1`, `rfh_lag3`) and **Rolling Means** to provide the model with a historical context of recent precipitation.
-
-### 2. The LSTM Architecture
-A stacked **Long Short-Term Memory (LSTM)** network was utilized to capture long-range temporal dependencies:
-*   **Weighted Training:** To ensure the model doesn't ignore extreme weather, **sample weights (up to 10x)** were applied to heavy rainfall events during the learning phase.
-*   **Loss Function:** Utilized **Huber Loss**, which is robust to outliers while maintaining high precision for standard rainfall levels.
-
-### 3. Performance Metrics
-| Metric | Value |
-| :--- | :--- |
-| **Training R² Score** | `0.9845` |
-| **Testing R² Score** | `0.9870` |
-| **Mean Absolute Error (MAE)** | `1.34 mm` |
-| **PBIAS (Bias)** | `-4.32%` |
+> Replace the link above with your deployed app or screenshot.
 
 ---
 
-## 💻 Operational Web App (Full-Stack)
+# 🧠 Core Intelligence (Machine Learning Pipeline)
 
-The "RainfallAI" web application provides a professional-grade interface for agronomists and researchers.
-
-### Key Features
-*   **Interactive Forecasting:** Adjust metrics like `RFH_AVG` and `Rainfall Index` via dynamic sliders to generate instant AI predictions.
-*   **Ethiopian Calendar Utility:** Standard Gregorian dates are automatically converted to the local Ethiopian calendar (e.g., *Yekatit 19, 2018*).
-*   **Recursive AI Sequences:** A custom logic that feeds AI predictions back into the model as "Lag" inputs, allowing users to build multi-step forward forecasts.
-*   **Glassmorphism UI:** A sleek dark-themed dashboard built with **Tailwind CSS** and animated with **Framer Motion**.
+The forecasting engine is optimized for the complex hydro-climatic patterns of Ethiopia’s highlands.
 
 ---
 
+## 1️⃣ Advanced Feature Engineering
 
+To achieve high predictive precision, raw subnational rainfall data was transformed using:
+
+### 🔁 Cyclical Time Encoding
+Months and Dekads were mapped into sine and cosine space:
+- Captures circular seasonality
+- Preserves transition between Dekad 36 → Dekad 1
+
+### 📉 Logarithmic Squashing
+Applied `np.log1p()` to:
+- Stabilize extreme rainfall values
+- Reduce skewness
+- Improve neural network convergence
+
+### ⏳ Temporal Memory Features
+Engineered historical context using:
+- Lag Features (`rfh_lag1`, `rfh_lag3`)
+- Rolling Means
+- Seasonal Indexes
+
+These allow the LSTM to learn rainfall persistence and delayed atmospheric effects.
+
+---
+
+## 2️⃣ LSTM Architecture
+
+A stacked Long Short-Term Memory (LSTM) network was used to model temporal dependencies.
+
+### 🧩 Architecture Highlights
+- Multi-layer LSTM stack
+- Dropout regularization
+- Dense regression output layer
+
+### ⚖️ Extreme Value Weighting
+To prevent underestimation of heavy rainfall:
+- Sample weights (up to 10x) applied to extreme events
+
+### 📉 Loss Function: Huber Loss
+Combines:
+- Robustness of MAE
+- Convergence efficiency of MSE
+
+This ensures stable learning even during extreme rainfall spikes.
+
+---
+
+## 📊 Model Performance
+
+| Metric | Score |
+|--------|--------|
+| Training R² | 0.9845 |
+| Testing R² | 0.9870 |
+| MAE | 1.34 mm |
+| PBIAS | -4.32% |
+
+✔ Extremely low systematic bias  
+✔ High stability during heavy rainfall peaks (>140mm)
+
+---
+
+# 💻 Operational Web Application (Full-Stack)
+
+RainfallAI includes a production-ready web dashboard for real-time forecasting and decision support.
+
+---
+
+## 🌟 Key Features
+
+### 🎛 Interactive Forecasting
+- Adjust RFH_AVG
+- Modify rainfall index
+- Instant AI-based prediction
+
+### 📆 Ethiopian Calendar Integration
+Automatically converts Gregorian dates into:
+- Ethiopian calendar format (e.g., Yekatit 19, 2018)
+
+### 🔄 Recursive Multi-Step Forecasting
+Custom recursive logic:
+- AI predictions fed back as lag inputs
+- Enables forward multi-dekad forecasting
+
+### 📈 High-Fidelity Visuals
+- Recharts-based dynamic graphs
+- Framer Motion animations
+- Real-time inference latency display
+
+---
+
+# 🛠 Tech Stack
+
+### 🖥 Frontend
+- React 19
+- Vite
+- Tailwind CSS
+- Recharts
+- Lucide Icons
+- Framer Motion
+
+### ⚙ Backend
+- Flask
+- Flask-CORS
+- REST API architecture
+
+### 💾 Persistence
+- Model: `.keras`
+- Scalers: `joblib`
+- JSON API responses
+
+---
+
+# 📂 Project Structure
+
+```
+Rainfall4/
+├── research_notebook.ipynb     # Data Analysis, Feature Engineering & Training
+├── webapp/
+│   ├── backend/
+│   │   ├── model/              # Saved LSTM (.keras)
+│   │   ├── app.py              # Flask API (Prediction Logic)
+│   │   ├── scaler_X_new.pkl    # Feature Scaler
+│   │   └── requirements.txt
+│   └── frontend/
+│       ├── src/
+│       │   ├── pages/
+│       │   ├── components/
+│       │   └── App.jsx
+│       └── package.json
+```
+
+---
+
+# 🚀 Getting Started
+
+## 1️⃣ Prerequisites
+
+- Python 3.9+
+- Node.js 18+
+
+---
+
+## 2️⃣ Backend Setup
+
+```bash
+cd webapp/backend
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python app.py
+```
+
+Backend runs at:
+```
+http://127.0.0.1:5000
+```
+
+---
+
+## 3️⃣ Frontend Setup
+
+```bash
+cd webapp/frontend
+npm install
+npm run dev
+```
+
+Frontend runs at:
+```
+http://localhost:5173
+```
+
+---
+
+# 📈 Residual & Identity Analysis
+
+The model demonstrates:
+
+- Near-perfect identity alignment
+- Strong peak rainfall tracking
+- Stable bias performance
+- Minimal underestimation during heavy storms
+
+Even during extreme rainfall > 140mm, forecast fidelity remains high.
+
+---
+
+# 🎯 Project Objective
+
+To support:
+- Climate-informed agriculture
+- Food security planning
+- Operational hydro-meteorological forecasting
+- AI-driven environmental monitoring
+
+---
+
+# 👤 Author
+
+**Manidefro Tmariam**  
+Computer Science | Data Science  
+Cloud & AI Systems  
+
+📌 Focus: AI for Climate Intelligence  
+📌 Domain: Deep Learning + Full-Stack Systems  
+
+---
+
+# ⭐ If You Found This Useful
+
+Give this repository a ⭐ and support climate AI innovation.
