@@ -55,42 +55,6 @@ The "RainfallAI" web application provides a professional-grade interface for agr
 
 ## 📂 Project Structure
 
-text
-Rainfall4/
-├── model_training.ipynb        # Data Science Notebook (EDA, Training, Evaluation)
-├── webapp/
-│   ├── backend/
-│   │   ├── app.py              # Flask API & Prediction Logic
-│   │   ├── model/              # Saved LSTM (.keras)
-│   │   ├── scaler_X_new.pkl    # Input Feature Scalers
-│   │   └── requirements.txt    # Backend Dependencies
-│   └── frontend/
-│       ├── src/
-│       │   ├── pages/          # Home.jsx (Dashboard), AboutData.jsx
-│       │   ├── components/     # Navbar, Performance Charts
-│       │   └── App.jsx         # Routing & Global State
-│       └── package.json        # Frontend Dependencies
-
-🚀 Getting Started
-1. Prerequisites
-Python 3.9+
-Node.js 18+
-2. Backend Setup
-code
-Bash
-cd webapp/backend
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-python app.py
-3. Frontend Setup
-code
-Bash
-cd webapp/frontend
-npm install
-npm run dev
-📊 Visual Analysis
-The model exhibits near-perfect fidelity. The Identity Plot shows a tight correlation even at high intensity (>150mm), and the Rain Season Tracking confirms the model captures seasonal transitions with zero phase lag.
 🤝 Contributing
 Contributions are welcome! If you'd like to improve the feature engineering or UI components, please fork the repo and submit a pull request.
 Developed by: [Your Name]
