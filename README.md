@@ -55,7 +55,7 @@ The "RainfallAI" web application provides a professional-grade interface for agr
 
 ## 📂 Project Structure
 
-```text
+text
 Rainfall4/
 ├── model_training.ipynb        # Data Science Notebook (EDA, Training, Evaluation)
 ├── webapp/
