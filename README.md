@@ -61,7 +61,7 @@ The "RainfallAI" web application provides a professional-grade interface for agr
 * **Node.js 18+**
 
 ### 2. Backend Setup
-```bash
+
 cd webapp/backend
 python -m venv venv
 # Activate on Windows: venv\Scripts\activate
@@ -70,10 +70,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 python app.py
 
-🤝 Contributing
-Contributions are welcome! If you'd like to improve the feature engineering or UI components, please fork the repo and submit a pull request.
-Developed by: [Your Name]
-Focus: Climate AI & Full-Stack Development
+t
 
 cd webapp/frontend
 npm install
@@ -82,5 +79,5 @@ npm run dev
 The model exhibits near-perfect fidelity. The Identity Plot shows a tight correlation even at high intensity (>150mm), and the Rain Season Tracking confirms the model captures seasonal transitions with zero phase lag. The use of Huber Loss and sample weighting allows the dashboard to display accurate "Extreme Peak" warnings.
 🤝 Contributing
 Contributions are welcome! If you'd like to improve the feature engineering, add more climate variables, or enhance the UI components, please fork the repo and submit a pull request.
-Developed by: [Your Name]
+Developed by: [Demirewu manidefro]
 Focus: Climate AI & Full-Stack Development
