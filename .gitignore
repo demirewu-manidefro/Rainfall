@@ -1,0 +1,19 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env/
+
+# Node artifacts
+webapp/frontend/node_modules/
+webapp/frontend/dist/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Large model files (optional, but good practice to keep them for this small project)
+# !rainfall_model.keras
+# !scaler_X.pkl
+# !scaler_y.pkl
