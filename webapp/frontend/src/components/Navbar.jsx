@@ -14,7 +14,7 @@ const Navbar = () => {
             transition={{ duration: 0.5 }}
             className="w-full bg-slate-900/80 backdrop-blur-md border-b border-white/10 sticky top-0 z-50 shadow-lg"
         >
-            <div className="w-full px-4 md:px-12 lg:px-24 flex items-center justify-between py-4">
+            <div className="w-full px-4 md:px-12 lg:px-24 flex items-center justify-between py-2">
                 <Link to="/" className="flex items-center gap-2 group shrink-0">
                     <div className="bg-gradient-to-tr from-blue-500 to-cyan-400 p-1.5 md:p-2 rounded-lg group-hover:scale-110 transition-transform">
                         <CloudRain className="w-5 h-5 md:w-6 md:h-6 text-white" />
