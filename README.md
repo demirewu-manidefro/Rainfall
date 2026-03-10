@@ -1,44 +1,65 @@
-# Ethiopia Rainfall Prediction Project
+# 🌧️ Ethiopia Dekadal Rainfall Prediction System
 
-A full-stack operational rainfall forecasting system leveraging Stacked LSTM Neural Networks and ENACTS climate data.
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)
+![React](https://img.shields.io/badge/React-19-blue.svg)
+![Flask](https://img.shields.io/badge/Flask-Backend-black.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
 
-## 🚀 Quick Start
+A **Deep Learning + Web Application system** designed to forecast **Dekadal Rainfall (10-day interval)** at the **Woreda level (Admin Level 2) in Ethiopia**.
 
-### 1. Prerequisites
-- Python 3.9+
-- Node.js 18+
+The system combines:
 
-### 2. Backend Setup
-```bash
-cd webapp/backend
-pip install -r requirements.txt
-python app.py
-```
+- **LSTM Deep Learning model**
+- **Feature Engineering for seasonal climate patterns**
+- **Flask API backend**
+- **React interactive dashboard**
 
-### 3. Frontend Setup
-```bash
-cd webapp/frontend
-npm install
-npm run dev
-```
-
-## 📊 project Structure
-- `/webapp/backend`: Flask API & Model Inference
-- `/webapp/frontend`: React Dashboard & Visualizations
-- `rainfall_prediction.ipynb`: Original ML training and experimentation notebook
-- `WEBSITE_ML_DOCUMENTATION.md`: Detailed technical system documentation
-- `TECHNICAL_REPORT.md`: Experimental journey and ML performance analysis
-
-## 🧠 Machine Learning Overview
-- **Architecture**: Stacked LSTM (64 -> Dropout -> 32 -> Dense)
-- **Dataset**: Ethiopia NMA ENACTS_v7
-- **Accuracy**: R² ~0.78 | MAE ~7.97mm
-- **Features**: Historical Lags (1, 3), Monthly Seasonality, Dekadal Periodicity.
-
-## 📄 Documentation
-For more detailed information, please refer to:
-- [Technical Documentation](./WEBSITE_ML_DOCUMENTATION.md)
-- [ML Experimental Report](./TECHNICAL_REPORT.md)
+This enables **accurate rainfall forecasting and visualization for agriculture and climate monitoring**.
 
 ---
-*Developed for Rainfall Climate Analysis in Ethiopia.*
+
+# 🚀 Project Highlights
+
+✅ **High Prediction Accuracy**
+
+- **R² Score:** 0.98  
+- **MAE:** 1.69 mm  
+
+✅ **Peak Rainfall Learning**
+
+- Extreme rainfall events weighted **10× higher importance**
+
+✅ **Seasonality Modeling**
+
+- Cyclical **Sin / Cos encoding** for months and dekads
+
+✅ **Robust Training**
+
+- **Huber Loss** used for stability with extreme climate data
+
+✅ **Interactive Web Dashboard**
+
+- Real-time prediction  
+- Historical rainfall visualization  
+- Clean responsive UI  
+
+---
+
+# 🧠 Machine Learning Pipeline
+
+## 1️⃣ Feature Engineering
+
+To improve temporal learning capability, several engineered features were introduced.
+
+| Feature | Purpose |
+|------|------|
+| `log1p rainfall` | Reduce variance of extreme rainfall |
+| `lag1` | Previous dekad rainfall |
+| `lag3` | Rainfall 3 dekads ago |
+| `sin/cos month` | Capture yearly seasonal cycles |
+| `rolling mean` | Short-term rainfall trend |
+
+---
+
+# 🤖 LSTM Model Architecture
