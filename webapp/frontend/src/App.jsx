@@ -31,7 +31,7 @@ function AppContent() {
         </AnimatePresence>
       </main>
 
-      <Footer />
+      {location.pathname !== '/' && <Footer />}
     </div>
   );
 }
