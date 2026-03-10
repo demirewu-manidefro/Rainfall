@@ -265,157 +265,156 @@ const Home = () => {
     ].sort((a, b) => new Date(a.date) - new Date(b.date));
 
     return (
-        <div className="w-full px-4 md:px-8 lg:px-12 py-4 min-h-[calc(100vh-80px)] flex flex-col">
+        <div className="w-full px-4 md:px-6 lg:px-8 py-2 h-[calc(100vh-64px)] flex flex-col overflow-hidden">
 
             {/* Header Section */}
             <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="mb-4 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-3"
+                className="mb-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-2"
             >
                 <div>
-                    <h1 className="text-xl md:text-2xl font-bold text-white mb-1">
+                    <h1 className="text-lg md:text-xl font-bold text-white leading-none">
                         Rainfall Prediction Dashboard
                     </h1>
-                    <p className="text-gray-400 text-[10px] md:text-sm">
+                    <p className="text-gray-400 text-[9px] md:text-xs">
                         Operational forecasting using stacked LSTM neural networks.
                     </p>
                 </div>
-                <div className="flex items-center gap-4 text-xs text-gray-400 bg-slate-800/50 px-4 py-2 rounded-lg border border-white/5 shadow-inner">
-                    <span className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></span>
+                <div className="flex items-center gap-3 text-[10px] text-gray-400 bg-slate-800/30 px-3 py-1 rounded-full border border-white/5 shadow-inner">
+                    <span className="flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></span>
                         Backend Ready
                     </span>
-                    <span className="w-px h-3 bg-white/10"></span>
-                    <span className="text-blue-400/80 font-medium">Synced with Rainfall AI Core v1.0</span>
+                    <span className="w-px h-2 bg-white/10"></span>
+                    <span className="text-blue-400/80 font-medium tracking-tight">Rainfall AI v1.0</span>
                 </div>
             </motion.div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 flex-1 overflow-hidden">
 
                 {/* Left Column: Input Panel */}
                 <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1, duration: 0.5 }}
-                    className="lg:col-span-4 xl:col-span-3"
+                    className="lg:col-span-4 xl:col-span-3 h-full overflow-hidden"
                 >
-                    <div className="bg-slate-900/80 backdrop-blur-xl rounded-2xl p-4 border border-white/10 shadow-xl h-full flex flex-col">
-                        <div className="flex items-center gap-3 mb-4">
-                            <Activity className="w-5 h-5 text-blue-400" />
-                            <h2 className="text-base font-semibold text-white">Input Parameters</h2>
+                    <div className="bg-slate-900/80 backdrop-blur-xl rounded-xl p-3 border border-white/10 shadow-xl h-full flex flex-col overflow-y-auto custom-scrollbar">
+                        <div className="flex items-center gap-2 mb-3">
+                            <Activity className="w-4 h-4 text-blue-400" />
+                            <h2 className="text-sm font-semibold text-white">Input Parameters</h2>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="space-y-3 flex-1 flex flex-col">
+                        <form onSubmit={handleSubmit} className="space-y-2 flex-1 flex flex-col">
 
-                            <div className="space-y-3">
+                            <div className="space-y-2">
                                 <label className="block">
-                                    <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 block">Temporal Context</span>
+                                    <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-1 block">Temporal Context</span>
                                     <div className="relative">
-                                        <Calendar className="w-4 h-4 text-gray-400 absolute left-3 top-3.5" />
+                                        <Calendar className="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-2.5" />
                                         <input
                                             type="date"
                                             name="date"
                                             value={formData.date}
                                             onChange={handleChange}
                                             required
-                                            className="w-full bg-slate-950 border border-slate-700 text-white rounded-lg pl-10 pr-4 py-3 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-sm"
+                                            className="w-full bg-slate-950 border border-slate-700 text-white rounded-lg pl-9 pr-3 py-2 focus:ring-1 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-xs"
                                         />
                                     </div>
-                                    <div className="mt-2 px-3 py-1 bg-blue-500/5 border border-blue-500/10 rounded-lg flex items-center justify-between">
-                                        <span className="text-[10px] text-gray-500 uppercase tracking-tighter">Ethiopian Date</span>
-                                        <span className="text-xs font-medium text-blue-300">{getEthiopianDate(formData.date)}</span>
+                                    <div className="mt-1 px-2 py-0.5 bg-blue-500/5 border border-blue-500/10 rounded-md flex items-center justify-between">
+                                        <span className="text-[8px] text-gray-600 uppercase tracking-tighter">Ethiopian</span>
+                                        <span className="text-[10px] font-medium text-blue-400">{getEthiopianDate(formData.date)}</span>
                                     </div>
                                 </label>
 
-                                <div className="h-px bg-white/5 my-2"></div>
+                                <div className="h-px bg-white/5 my-1"></div>
 
-                                <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider block mb-2">Precipitation Metrics</span>
+                                <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider block mb-1">Precipitation Metrics</span>
 
-                                <div className="bg-slate-950/50 p-3 rounded-xl border border-white/5 space-y-4">
+                                <div className="bg-slate-950/50 p-2 rounded-lg border border-white/5 space-y-2">
                                     <InputFieldCompact
-                                        label="Avg Amount (rfh_avg)"
+                                        label="Avg Amount"
                                         name="rfh_avg"
                                         value={formData.rfh_avg}
                                         onChange={handleChange}
-                                        placeholder="0.00"
+                                        placeholder="0.0"
                                         min="0" max="250"
                                     />
                                     <InputFieldCompact
-                                        label="Rainfall Index (rfq)"
+                                        label="Rainfall Index"
                                         name="rfq"
                                         value={formData.rfq}
                                         onChange={handleChange}
-                                        placeholder="0.00"
+                                        placeholder="0.0"
                                         min="0" max="200"
                                     />
                                 </div>
 
-                                <div className="bg-slate-950/50 p-3 rounded-xl border border-white/5 space-y-4">
+                                <div className="bg-slate-950/50 p-2 rounded-lg border border-white/5 space-y-2">
                                     <InputFieldCompact
-                                        label="Previous Period (Lag 1)"
+                                        label="Previous (Lag 1)"
                                         name="rfh_lag1"
                                         value={formData.rfh_lag1}
                                         onChange={handleChange}
-                                        placeholder="0.00"
+                                        placeholder="0.0"
                                         min="0" max="250"
                                     />
                                     <InputFieldCompact
-                                        label="Historical Trend (Lag 3)"
+                                        label="Historical (Lag 3)"
                                         name="rfh_lag3"
                                         value={formData.rfh_lag3}
                                         onChange={handleChange}
-                                        placeholder="0.00"
+                                        placeholder="0.0"
                                         min="0" max="250"
                                     />
                                 </div>
                             </div>
 
-                            <div className="mt-auto pt-4">
+                            <div className="mt-auto pt-3 space-y-2">
                                 <button
                                     id="submit-btn"
                                     type="submit"
                                     disabled={loading}
-                                    className={`w-full py-3.5 rounded-lg font-semibold text-white transition-all shadow-lg flex items-center justify-center gap-2 relative overflow-hidden ${loading ? 'bg-slate-700 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500 shadow-blue-500/20'
+                                    className={`w-full py-2.5 rounded-lg font-semibold text-white transition-all shadow-lg flex items-center justify-center gap-2 relative overflow-hidden ${loading ? 'bg-slate-700 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500 shadow-blue-500/20'
                                         }`}
                                 >
                                     {loading ? (
                                         <>
-                                            <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24">
+                                            <svg className="animate-spin h-3.5 w-3.5 text-white" viewBox="0 0 24 24">
                                                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
                                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                             </svg>
-                                            <span>Running Inference...</span>
+                                            <span className="text-xs">Processing...</span>
                                         </>
                                     ) : (
                                         <>
-                                            <Zap className="w-4 h-4 fill-current" />
-                                            <span>Run Prediction</span>
+                                            <Zap className="w-3.5 h-3.5 fill-current" />
+                                            <span className="text-sm">Run Prediction</span>
                                         </>
                                     )}
                                 </button>
 
                                 {prediction !== null && (
-                                    <div className="space-y-2 mt-3">
+                                    <div className="grid grid-cols-2 gap-2">
                                         <button
                                             type="button"
                                             onClick={handleForwardStep}
-                                            className="w-full py-2.5 rounded-lg font-medium text-blue-400 border border-blue-500/30 hover:bg-blue-500/10 transition-all flex items-center justify-center gap-2"
+                                            className="py-2.5 rounded-lg font-medium text-blue-400 border border-blue-500/20 hover:bg-blue-500/10 transition-all flex items-center justify-center gap-1.5 text-xs"
                                         >
-                                            <ArrowRight className="w-4 h-4" />
-                                            <span>Next 10 Days</span>
+                                            <ArrowRight className="w-3 h-3" />
+                                            <span>Next 10d</span>
                                         </button>
 
-                                        {/* Smart Forecast Button */}
                                         <button
                                             type="button"
                                             disabled={loading}
                                             onClick={handleForecastToTarget}
-                                            className={`w-full py-2.5 rounded-lg font-medium transition-all flex items-center justify-center gap-2 ${loading ? 'opacity-50 cursor-not-allowed' : 'text-purple-400 border border-purple-500/30 hover:bg-purple-500/10'}`}
+                                            className={`py-2.5 rounded-lg font-medium transition-all flex items-center justify-center gap-1.5 text-xs ${loading ? 'opacity-50 cursor-not-allowed' : 'text-purple-400 border border-purple-500/20 hover:bg-purple-500/10'}`}
                                         >
-                                            <Activity className={`w-4 h-4 ${isAutoPredicting ? 'animate-spin' : ''}`} />
-                                            <span>{isAutoPredicting ? 'Running Sequence...' : 'AI Forecast to Target Date'}</span>
+                                            <Activity className={`w-3 h-3 ${isAutoPredicting ? 'animate-spin' : ''}`} />
+                                            <span>{isAutoPredicting ? 'Seq...' : 'Forecast'}</span>
                                         </button>
                                     </div>
                                 )}
@@ -429,15 +428,15 @@ const Home = () => {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2, duration: 0.5 }}
-                    className="lg:col-span-8 xl:col-span-9 flex flex-col gap-6"
+                    className="lg:col-span-8 xl:col-span-9 flex flex-col gap-3 overflow-hidden h-full"
                 >
                     {/* Top Row: Main Prediction & Status */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-auto md:h-[180px]">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 h-[120px] shrink-0">
                         {/* Main Prediction Display */}
-                        <div className="md:col-span-2 bg-slate-900/50 border border-white/10 rounded-2xl p-6 relative overflow-hidden flex flex-col justify-center items-center backdrop-blur-sm min-h-[160px] md:min-h-0">
+                        <div className="md:col-span-2 bg-slate-900/50 border border-white/10 rounded-xl p-2 relative overflow-hidden flex flex-col justify-center items-center backdrop-blur-sm">
                             <div className="absolute inset-0 bg-blue-500/5 radial-gradient"></div>
 
-                            <h3 className="text-gray-400 text-[10px] font-medium uppercase tracking-widest mb-2 z-10 text-center">Forecasted Rainfall (Dekadal)</h3>
+                            <h3 className="text-gray-500 text-[8px] md:text-[9px] font-semibold uppercase tracking-widest mb-1 z-10">Forecasted Rainfall (Dekadal)</h3>
 
                             <AnimatePresence mode='wait'>
                                 {prediction !== null ? (
@@ -448,82 +447,68 @@ const Home = () => {
                                         className="text-center z-10"
                                     >
                                         <div className="flex items-baseline justify-center gap-1">
-                                            <span className="text-5xl md:text-6xl font-black text-white tracking-tighter">
+                                            <span className="text-4xl md:text-5xl font-black text-white tracking-tighter">
                                                 {prediction.toFixed(1)}
                                             </span>
-                                            <span className="text-xl text-gray-500 font-medium">mm</span>
+                                            <span className="text-base text-gray-500 font-medium">mm</span>
                                         </div>
-                                        <div className="mt-2 flex items-center justify-center gap-2 text-green-400 bg-green-400/10 px-2 py-0.5 rounded-full text-[10px] font-medium w-fit mx-auto">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-green-400"></div>
-                                            High Confidence
+                                        <div className="mt-1 flex items-center justify-center gap-1.5 text-green-400 bg-green-400/10 px-2 py-0.5 rounded-full text-[8px] md:text-[9px] font-bold w-fit mx-auto border border-green-500/10 uppercase tracking-tighter">
+                                            <div className="w-1 h-1 rounded-full bg-green-500 animate-pulse"></div>
+                                            Optimal Confidence
                                         </div>
                                     </motion.div>
                                 ) : (
-                                    <div className="text-center z-10 opacity-40">
-                                        <CloudDrizzle className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-2 text-gray-500" />
-                                        <p className="text-base md:text-lg text-gray-400">Awaiting Model Input</p>
+                                    <div className="text-center z-10 opacity-30">
+                                        <CloudDrizzle className="w-8 h-8 md:w-10 md:h-10 mx-auto mb-1 text-gray-500" />
+                                        <p className="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest">Awaiting Model</p>
                                     </div>
                                 )}
                             </AnimatePresence>
                         </div>
 
                         {/* Status / Confidence Card */}
-                        <div className="bg-slate-900/50 border border-white/10 rounded-2xl p-6 flex flex-col justify-center backdrop-blur-sm min-h-[140px] md:min-h-0">
-                            <h4 className="text-gray-400 text-[10px] uppercase tracking-wider font-semibold mb-3">Prediction Confidence</h4>
+                        <div className="bg-slate-900/50 border border-white/10 rounded-xl p-3 flex flex-col justify-center backdrop-blur-sm">
+                            <h4 className="text-gray-500 text-[8px] md:text-[9px] uppercase tracking-wider font-bold mb-2">Confidence Matrix</h4>
                             {prediction !== null ? (
-                                <div className="space-y-4">
-                                    <div className="flex justify-between items-end mb-1">
-                                        <span className="text-2xl font-bold text-blue-400">94.2%</span>
-                                        <span className="text-[10px] text-gray-500">OPTIMIZED INFERENCE</span>
+                                <div className="space-y-2">
+                                    <div className="flex justify-between items-end">
+                                        <span className="text-xl font-black text-blue-400">94.2%</span>
+                                        <span className="text-[8px] text-gray-600 font-bold">STABLE</span>
                                     </div>
-                                    <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                                    <div className="w-full bg-slate-950 h-1.5 rounded-full overflow-hidden border border-white/5">
                                         <div className="w-[94.2%] h-full bg-gradient-to-r from-blue-600 to-blue-400"></div>
                                     </div>
-                                    <p className="text-[10px] text-gray-500 leading-tight">
-                                        Confidence level based on LSTM temporal state and recent lag convergence metrics.
+                                    <p className="text-[8px] text-gray-500 leading-tight">
+                                        LSTM temporal state convergence.
                                     </p>
                                 </div>
                             ) : (
-                                <div className="text-center py-2">
-                                    <Activity className="w-6 h-6 md:w-8 md:h-8 text-gray-700 mx-auto mb-2" />
-                                    <p className="text-[10px] md:text-xs text-gray-600 italic text-center">No active inference</p>
+                                <div className="text-center flex flex-col items-center">
+                                    <Activity className="w-5 h-5 text-gray-800 mb-1" />
+                                    <p className="text-[8px] text-gray-700 font-bold italic">STANDBY</p>
                                 </div>
                             )}
                         </div>
                     </div>
 
-                    {/* Bottom Row: Validation Chart (Replacing Trend Analysis) */}
-                    <div className="flex-1 bg-slate-900/50 border border-white/10 rounded-2xl p-4 backdrop-blur-sm min-h-[300px] flex flex-col">
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-4">
-                            <h3 className="text-base md:text-lg font-semibold text-white flex items-center gap-2">
-                                <CheckCircle className="w-5 h-5 text-green-400" />
+                    {/* Bottom Row: Validation Chart */}
+                    <div className="flex-1 bg-slate-900/50 border border-white/10 rounded-xl p-3 backdrop-blur-sm flex flex-col overflow-hidden">
+                        <div className="flex items-center justify-between mb-2 shrink-0">
+                            <h3 className="text-xs md:text-sm font-bold text-white flex items-center gap-1.5">
+                                <CheckCircle className="w-4 h-4 text-green-400" />
                                 Model Performance
                             </h3>
 
-                            <div className="flex flex-wrap gap-2 items-center">
-                                <div className="px-2 py-1 rounded-full text-[9px] md:text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20 flex items-center gap-1">
-                                    <span className="w-2 h-0.5 bg-blue-400"></span> Actual
-                                </div>
-                                <div className="px-2 py-1 rounded-full text-[9px] md:text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20 flex items-center gap-1">
-                                    <span className="w-2 h-0.5 border-t border-dashed border-red-400"></span> Predicted
-                                </div>
+                            <div className="flex gap-2 items-center">
+                                <LegendBadge color="bg-blue-400" text="Actual" />
+                                <LegendBadge color="bg-red-400" text="Predicted" dashed />
                                 {userPredictions.length > 0 && (
-                                    <>
-                                        <div className="px-2 py-1 rounded-full text-[9px] md:text-xs font-medium bg-green-500/10 text-green-400 border border-green-500/20 flex items-center gap-1">
-                                            <span className="w-2 h-2 rounded-full bg-green-400"></span> Yours ({userPredictions.length})
-                                        </div>
-                                        <button
-                                            onClick={() => setUserPredictions([])}
-                                            className="px-2 py-1 rounded-full text-[9px] md:text-xs font-medium bg-gray-500/10 text-gray-400 border border-gray-500/20 hover:bg-gray-500/20 transition-colors"
-                                        >
-                                            Clear
-                                        </button>
-                                    </>
+                                    <LegendBadge color="bg-green-400" text={`Yours (${userPredictions.length})`} dot />
                                 )}
                             </div>
                         </div>
 
-                        <div className="flex-1 w-full min-h-[220px]">
+                        <div className="flex-1 w-full min-h-0">
                             <ResponsiveContainer width="100%" height="100%">
                                 <ComposedChart
                                     data={chartData}
@@ -564,7 +549,6 @@ const Home = () => {
                                             return [value + ' mm', label];
                                         }}
                                     />
-                                    <Legend wrapperStyle={{ paddingTop: '20px' }} />
 
                                     {/* 1. Historical Actual Line (Blue Solid) */}
                                     <Line
@@ -630,35 +614,45 @@ const Home = () => {
     );
 };
 
+const LegendBadge = ({ color, text, dashed, dot }) => (
+    <div className="px-1.5 py-0.5 rounded-full text-[9px] font-medium bg-white/5 text-gray-400 border border-white/5 flex items-center gap-1">
+        {dashed ? (
+            <span className={`w-2 h-0.5 border-t border-dashed ${color.replace('bg-', 'border-')}`}></span>
+        ) : dot ? (
+            <span className={`w-1.5 h-1.5 rounded-full ${color}`}></span>
+        ) : (
+            <span className={`w-2 h-0.5 ${color}`}></span>
+        )}
+        <span className="leading-none">{text}</span>
+    </div>
+);
+
 const InputFieldCompact = ({ label, name, value, onChange, placeholder, min, max }) => (
-    <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
-            <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-widest">{label}</label>
-            <span className="text-sm font-mono text-blue-400 bg-blue-400/5 px-2 py-0.5 rounded border border-blue-500/10">
-                {parseFloat(value || 0).toFixed(1)} <span className="text-[10px] text-gray-600">mm</span>
-            </span>
+    <div className="flex flex-col gap-0.5 w-full">
+        <div className="flex justify-between items-center">
+            <span className="text-[9px] text-gray-500 font-medium uppercase tracking-tighter">{label}</span>
+            <div className="flex items-center gap-1">
+                <input
+                    type="number"
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    placeholder={placeholder}
+                    className="w-12 bg-slate-950 border border-white/5 text-white rounded px-1.5 py-0.5 text-[9px] focus:ring-1 focus:ring-blue-500 outline-none text-right"
+                />
+                <span className="text-[8px] text-gray-600 w-3 font-mono">mm</span>
+            </div>
         </div>
-        <div className="flex items-center gap-3">
-            <input
-                type="range"
-                name={name}
-                min={min}
-                max={max}
-                step="0.1"
-                value={value || 0}
-                onChange={onChange}
-                className="flex-1 h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
-            />
-            <input
-                type="number"
-                step="0.1"
-                name={name}
-                value={value}
-                onChange={onChange}
-                placeholder={placeholder}
-                className="w-14 md:w-16 bg-transparent border-b border-white/5 text-right text-white py-1 focus:border-blue-500 outline-none transition-colors font-mono text-[10px] md:text-xs placeholder-gray-800 shrink-0"
-            />
-        </div>
+        <input
+            type="range"
+            name={name}
+            value={value}
+            onChange={onChange}
+            min={min}
+            max={max}
+            step="0.1"
+            className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
+        />
     </div>
 );
 
