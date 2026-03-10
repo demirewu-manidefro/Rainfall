@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { CloudRain, Home, Info, Github, Menu, X } from 'lucide-react';
+import { CloudRain, Home, Info, Github, Menu, X, Activity } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Navbar = () => {
@@ -35,6 +35,7 @@ const Navbar = () => {
                 {/* Desktop Menu */}
                 <div className="hidden md:flex items-center gap-6">
                     <NavLink to="/" icon={<Home className="w-4 h-4" />} text="Dashboard" active={location.pathname === '/'} />
+                    <NavLink to="/insights" icon={<Activity className="w-4 h-4" />} text="Performance" active={location.pathname === '/insights'} />
                     <NavLink to="/about" icon={<Info className="w-4 h-4" />} text="About System" active={location.pathname === '/about'} />
                     <a
                         href="https://github.com/demirewu-manidefro/Rainfall.git"
@@ -65,6 +66,14 @@ const Navbar = () => {
                             >
                                 <Home className="w-5 h-5" />
                                 <span className="font-medium">Dashboard</span>
+                            </Link>
+                            <Link
+                                to="/insights"
+                                onClick={() => setIsOpen(false)}
+                                className={`flex items-center gap-3 p-3 rounded-xl transition-colors ${location.pathname === '/insights' ? 'bg-blue-500/10 text-blue-400' : 'text-gray-400 hover:text-white hover:bg-white/5'}`}
+                            >
+                                <Activity className="w-5 h-5" />
+                                <span className="font-medium">Performance</span>
                             </Link>
                             <Link
                                 to="/about"
