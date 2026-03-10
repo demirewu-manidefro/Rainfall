@@ -48,32 +48,36 @@ This enables **accurate rainfall forecasting and visualization for agriculture a
 
 # 🧠 Machine Learning Pipeline
 
-## 1️⃣ Feature Engineering
-
-To improve temporal learning capability, several engineered features were introduced.
+## Feature Engineering
 
 | Feature | Purpose |
 |------|------|
-| `log1p rainfall` | Reduce variance of extreme rainfall |
-| `lag1` | Previous dekad rainfall |
-| `lag3` | Rainfall 3 dekads ago |
-| `sin/cos month` | Capture yearly seasonal cycles |
-| `rolling mean` | Short-term rainfall trend |
+| log1p rainfall | Reduce variance of extreme rainfall |
+| lag1 | Previous dekad rainfall |
+| lag3 | Rainfall 3 dekads ago |
+| sin/cos month | Capture yearly seasonal cycles |
+| rolling mean | Short-term rainfall trend |
 
+---
+
+# 🤖 LSTM Model Architecture
+
+```
 Model: LSTM_Rain_Expert
+_____________________________________________________________
 
-Layer (type) Output Shape Param #
+Layer (type)            Output Shape            Param #
 
-LSTM (128 units) (None, 1, 128) 70,656
-BatchNormalization (None, 1, 128) 512
-Dropout (0.2) (None, 1, 128) 0
-LSTM (64 units) (None, 64) 49,408
-Dense (32 ReLU) (None, 32) 2,080
-Dense (16 ReLU) (None, 16) 528
-Dense (1 Linear) (None, 1) 17
+LSTM (128 units)        (None, 1, 128)           70,656
+BatchNormalization      (None, 1, 128)           512
+Dropout (0.2)           (None, 1, 128)           0
+LSTM (64 units)         (None, 64)               49,408
+Dense (32 ReLU)         (None, 32)               2,080
+Dense (16 ReLU)         (None, 16)               528
+Dense (1 Linear)        (None, 1)                17
 
 Total Parameters: 123,201
-
+```
 
 ---
 
@@ -100,13 +104,13 @@ The system includes a **Flask API backend** and a **React dashboard frontend**.
 
 ---
 
-## Backend
+# Backend
 
 Location
 
-
+```
 /webapp/backend
-
+```
 
 Technology
 
@@ -117,37 +121,37 @@ Technology
 
 Model Loaded
 
-
+```
 final_rainfall_model.keras
-
+```
 
 ### API Endpoints
 
-**Predict Rainfall**
+Predict Rainfall
 
-
+```
 POST /predict
-
+```
 
 Input
 
-
+```
 weather features
-
+```
 
 Output
 
-
+```
 predicted rainfall value
-
+```
 
 ---
 
-**Historical Data**
+Historical Data
 
-
+```
 GET /historical-data
-
+```
 
 Returns
 
@@ -161,9 +165,9 @@ Returns
 
 Location
 
-
+```
 /webapp/frontend
-
+```
 
 Technology Stack
 
@@ -178,7 +182,7 @@ Technology Stack
 
 ### Main Pages
 
-**Home Dashboard**
+Home Dashboard
 
 Features
 
@@ -188,7 +192,7 @@ Features
 
 ---
 
-**About Page**
+About Page
 
 Contains
 
@@ -202,9 +206,9 @@ Contains
 
 Add your dashboard screenshot here.
 
-
+```
 /screenshots/dashboard.png
-
+```
 
 Example
 
@@ -214,98 +218,100 @@ Example
 
 # 📂 Project Structure
 
-
+```
 Ethiopia-Rainfall-Prediction
 │
 ├── data
-│ └── eth-rainfall-subnat-full.csv
+│   └── eth-rainfall-subnat-full.csv
 │
 ├── models
-│ └── rainfall_model.keras
+│   └── rainfall_model.keras
 │
 ├── scalers
-│ ├── scaler_X.pkl
-│ └── scaler_y.pkl
+│   ├── scaler_X.pkl
+│   └── scaler_y.pkl
 │
 ├── notebooks
-│ └── training_pipeline.ipynb
+│   └── training_pipeline.ipynb
 │
 ├── webapp
-│ ├── backend
-│ │ └── app.py
-│ │
-│ └── frontend
-│ └── react dashboard
+│   ├── backend
+│   │   └── app.py
+│   │
+│   └── frontend
+│       └── react dashboard
 │
 ├── screenshots
-│ └── dashboard.png
+│   └── dashboard.png
 │
 └── README.md
-
+```
 
 ---
 
 # ⚙️ Installation
 
-Clone the repository
+Clone repository
 
-
+```
 git clone https://github.com/yourusername/rainfall-prediction-system.git
+```
 
+```
 cd rainfall-prediction-system
-
+```
 
 ---
 
 # 🔧 Run Backend
 
-
+```
 cd webapp/backend
-
+```
 
 Install dependencies
 
-
+```
 pip install -r requirements.txt
+```
 
+Run server
 
-Run Flask API
-
-
+```
 python app.py
+```
 
+Backend runs at
 
-Server runs on
-
-
+```
 http://localhost:5000
-
+```
 
 ---
 
 # 🎨 Run Frontend
 
-
+```
 cd webapp/frontend
-
+```
 
 Install packages
 
-
+```
 npm install
+```
 
+Start frontend
 
-Run development server
-
-
+```
 npm run dev
-
+```
 
 Open
 
-
+```
 http://localhost:5173
-
+```
 
 ---
 
@@ -334,13 +340,13 @@ This system can support
 **Demirewu Manidefro**
 
 Data Science Student  
-Debre Berhan University  
+Debre Berhan University
 
 GitHub
 
-
+```
 https://github.com/demirewu-manidefro
-
+```
 
 ---
 
@@ -351,7 +357,3 @@ If you like this project
 ⭐ Star the repository  
 🍴 Fork the project  
 📢 Share with the community
-
----
-
-# 🤖 LSTM Model Architecture
